@@ -21,7 +21,7 @@
 # Sample Usage:  include nginx_passenger
 class nginx_passenger (
   $ruby_version = 'ruby-2.0.0-p247',
-  $passenger_version = '4.0.19',
+  $passenger_version = '4.0.23',
   $logdir = '/var/log/nginx',
   $installdir = '/opt/nginx',
   $www    = '/var/www',

@@ -23,11 +23,13 @@ include nginx_passenger
 By default installs on _/opt/nginx_, there are some variables you might override
 
 ```puppet
-$ruby_version      = 'ruby-1.9.3-p125'
-$passenger_version = '3.0.12'
-$installdir	   = '/opt/nginx'
-$logdir		   = '/var/log/nginx'
-$www		   = '/var/www'
+classs {'nginx_passenger':
+    ruby_version      = 'ruby-1.9.3-p125'
+    passenger_version = '4.0.23'
+    installdir	   = '/opt/nginx'
+    logdir		   = '/var/log/nginx'
+    www		   = '/var/www'
+}
 ```
 
 A custom installation might look like this:

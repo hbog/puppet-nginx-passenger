@@ -1,3 +1,8 @@
+2013-10-09 - Version 0.1.4
+
+Summary:
+Bump default passenger version to "4.0.23", which brings node.js and meteor support.
+
 2013-10-09 - Version 0.1.2
 
 Summary:
