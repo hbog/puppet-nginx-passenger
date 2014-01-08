@@ -5,7 +5,7 @@ passenger using default ruby version on debian wheezy or ubuntu precise.
 
 After inclusion, this module ensures that any user in group `www-data` is able to deploy through tools such as capistrano or mina, this of course as long as you have right ssh configuration (keys or forwarding) in place.
 
-This module installs Nginx using [puppet-rvm](https://github.com/maestrodev/puppet-rvm/). Please, read the documentation before you begin. This module has been tested on Ubuntu Precise (12.04). For custom types, do not forget to enable pluginsync: 
+This module installs Nginx using [puppet-rvm](https://github.com/maestrodev/puppet-rvm/). Please, read the documentation before you begin. This module has been tested on Ubuntu Precise (12.04). For custom types, do not forget to enable pluginsync:
 ```puppet
 [main]
 pluginsync = true
@@ -23,28 +23,28 @@ include nginx_passenger
 By default installs on _/opt/nginx_, there are some variables you might override
 
 ```puppet
-classs {'nginx_passenger':
-    ruby_version      = 'ruby-1.9.3-p125'
-    passenger_version = '4.0.23'
-    installdir	   = '/opt/nginx'
-    logdir		   = '/var/log/nginx'
-    www		   = '/var/www'
+class {'nginx_passenger':
+    ruby_version      => 'ruby-1.9.3-p125',
+    passenger_version => '4.0.23',
+    installdir        => '/opt/nginx',
+    logdir            => '/var/log/nginx',
+    www               => '/var/www',
 }
 ```
 
 A custom installation might look like this:
 
-``` puppet
-node webserver { 
+```puppet
+node webserver {
     class { 'nginx_passenger':
-	 installdir = '/usr/local/nginx',
-	 logdir     = '/usr/local/logs/nginx',
+      installdir => '/usr/local/nginx',
+      logdir     => '/usr/local/logs/nginx',
     }
 }
 ```
 
 An advanced installation using nginx source would look like the following. Take a look at the [pagespeed module](http://forge.puppetlabs.com/kbatra/nginx_pagespeed) for help with downloading the source.
-```
+```puppet
 class { 'nginx_passenger':
     nginx_source_dir => '/home/vagrant/nginx-1.4.2',
     nginx_extra_configure_flags =>  '--add-module=/home/vagrant/ngx_pagespeed-release-1.6.29.5-beta'
@@ -55,7 +55,7 @@ class { 'nginx_passenger':
 
 You can easily configure a virtual hosts. An example is:
 
-```
+```puppet
 nginx::vhost { 'www.example.com':
 	port => '8080'
 	rails => true,
@@ -63,7 +63,7 @@ nginx::vhost { 'www.example.com':
 ```
 The _rails_ attribute is optional and set to false by default. However, if you want to deploy a rails app, use this attribute and the rails template will be used instead.
 
-### MIT License 
+### MIT License
 
 Copyright (C) 2012 by Sergio Galván
 
