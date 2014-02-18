@@ -18,6 +18,7 @@ http {
 
     passenger_root /usr/local/rvm/gems/<%= @ruby_version %>/gems/passenger-<%= @passenger_version %> ;
     passenger_ruby /usr/local/rvm/wrappers/<%= @ruby_version %>/ruby;
+    passenger_app_env <%= @app_environment %>;
 
     include       mime.types;
     default_type  application/octet-stream;

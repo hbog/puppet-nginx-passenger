@@ -26,7 +26,8 @@ class nginx_passenger (
   $installdir = '/opt/nginx',
   $www    = '/var/www',
   $nginx_source_dir = '',
-  $nginx_extra_configure_flags = '') {
+  $nginx_extra_configure_flags = '',
+  $app_environment = 'production') {
 
     $base_options = "--auto --prefix=${installdir}"
 
