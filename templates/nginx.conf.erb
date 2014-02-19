@@ -48,4 +48,7 @@ http {
     #  Virtual Hosts 
     ##
     include <%= @installdir %>/conf/sites-enabled/*;
+
+    # Proxy config
+    include <%= @installdir %>/config/proxy.conf;
 }

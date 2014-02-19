@@ -88,6 +88,15 @@ class nginx_passenger (
       require => Exec['nginx-install'],
     }
 
+    file { 'proxy-config':
+      path    => "${installdir}/conf/proxy.conf",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('nginx_passenger/proxy.conf.erb'),
+      require => Exec['nginx-install'],
+    }
+
     exec { 'create sites-conf':
       path    => ['/usr/bin','/bin'],
       unless  => "/usr/bin/test -d  ${installdir}/conf/sites-available && /usr/bin/test -d ${installdir}/conf/sites-enabled",
