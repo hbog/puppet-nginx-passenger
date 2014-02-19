@@ -30,6 +30,7 @@ define nginx_passenger::vhost(
   $root    = "/var/www/${host}",
   $makeroot = true,
   $rails = false,
+  $proxy = false,
 ){
   include nginx_passenger
 

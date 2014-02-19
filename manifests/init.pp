@@ -27,7 +27,7 @@ class nginx_passenger (
   $www    = '/var/www',
   $nginx_source_dir = '',
   $nginx_extra_configure_flags = '',
-  $app_environment = 'production') {
+  $app_environment = 'production') inherits nginx_passenger::params {
 
     $base_options = "--auto --prefix=${installdir}"
 
@@ -61,8 +61,8 @@ class nginx_passenger (
     rvm_gem {
       "${ruby_version}/passenger":
         ensure => $passenger_version,
-		require => Rvm_system_ruby["${ruby_version}"],
-		ruby_version => $ruby_version;
+  		require => Rvm_system_ruby["${ruby_version}"],
+  		ruby_version => $ruby_version;
     }
 
     exec { 'create container':
@@ -76,7 +76,7 @@ class nginx_passenger (
       group   => 'root',
       unless  => "/usr/bin/test -d ${installdir}",
       require => [ Package[$passenger_deps], Rvm_system_ruby[$ruby_version], Rvm_gem["${ruby_version}/passenger"]],
-	  environment => "HOME=/home/vagrant/",
+  	  environment => "HOME=/home/vagrant/",
     }
 
     file { 'nginx-config':
@@ -96,6 +96,10 @@ class nginx_passenger (
       content => template('nginx_passenger/proxy.conf.erb'),
       require => Exec['nginx-install'],
     }
+
+    file { $nx_run_dir:
+      ensure => directory,
+    } 
 
     exec { 'create sites-conf':
       path    => ['/usr/bin','/bin'],
