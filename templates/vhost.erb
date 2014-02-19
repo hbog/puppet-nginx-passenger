@@ -7,4 +7,9 @@ server {
       access_log <%= scope['nginx_passenger::logdir'] %>/<%= @host %>_access.log;
       error_log  <%= scope['nginx_passenger::logdir'] %>/<%= @host %>_error.log;
 
+      <% if @proxy %>
+      location / {
+      	 proxy_pass <%= @proxy %>;
+      }
+      <% end %>
 }
