@@ -114,8 +114,8 @@ class nginx_passenger (
       group     => 'root',
       mode      => '0755',
       content   => template('nginx_passenger/nginx.init.erb'),
-      require   => File['nginx-config'],
-      subscribe => File['nginx-config'],
+      require   => [File['nginx-config'], File['proxy-config']],
+      subscribe => [File['nginx-config'], File['proxy-config']],
     }
 
     file { $logdir:
@@ -130,7 +130,7 @@ class nginx_passenger (
       enable     => true,
       hasrestart => true,
       hasstatus  => true,
-      subscribe  => File['nginx-config'],
+      subscribe  => [File['nginx-config'], File['proxy-config']],
       require    => [ File[$logdir], File['nginx-service']],
     }
 
