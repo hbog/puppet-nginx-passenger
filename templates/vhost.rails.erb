@@ -5,7 +5,7 @@ server {
 			<% if @ssl == 'on' %>
       listen <%= @ssl_port %> <%= 'default_server' if @ssl_default_server %> ssl;
       <% end %>
-      server_name <%= @host %>;
+      server_name <%= @server_name %>;
       root <%= @root %>/current/public;
 
       passenger_enabled on;

@@ -26,6 +26,7 @@
 # }
 define nginx_passenger::vhost(
   $host = $name,
+  $server_name = $name,
   $port = '80',
   $root    = "/var/www/${host}",
   $makeroot = true,

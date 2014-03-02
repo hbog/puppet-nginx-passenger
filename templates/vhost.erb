@@ -4,7 +4,7 @@ server {
       <% if @ssl == 'on' and !@proxy %>
       listen <%= @ssl_port %> <%= 'default_server' if @ssl_default_server %> ssl;
       <% end %>
-      server_name <%= @host %>;
+      server_name <%= @server_name %>;
       root <%= @root %>;
 
       access_log <%= scope['nginx_passenger::logdir'] %>/<%= @host %>_access.log;
@@ -29,7 +29,7 @@ server {
 server {
 
       listen <%= @ssl_port %> <%= 'default_server' if @ssl_default_server %> ssl;
-      server_name <%= @host %>;
+      server_name <%= @server_name %>;
       root <%= @root %>;
 
       access_log <%= scope['nginx_passenger::logdir'] %>/<%= @host %>_access.log;
