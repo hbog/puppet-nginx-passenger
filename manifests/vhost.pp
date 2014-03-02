@@ -31,6 +31,12 @@ define nginx_passenger::vhost(
   $makeroot = true,
   $rails = false,
   $proxy = false,
+  $proxy_ssl = false,
+  $ssl = off,
+  $ssl_certificate = '',
+  $ssl_certificate_key = '',
+  $ssl_port = '443',
+  $ssl_default_server = false
 ){
   include nginx_passenger
 
