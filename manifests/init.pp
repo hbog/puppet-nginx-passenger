@@ -26,7 +26,8 @@ class nginx_passenger (
   $installdir = '/opt/nginx',
   $www    = '/var/www',
   $nginx_source_dir = '',
-  $nginx_extra_configure_flags = '') {
+  $nginx_extra_configure_flags = '',
+  $app_environment = 'production') inherits nginx_passenger::params {
 
     $base_options = "--auto --prefix=${installdir}"
 
@@ -60,8 +61,8 @@ class nginx_passenger (
     rvm_gem {
       "${ruby_version}/passenger":
         ensure => $passenger_version,
-		require => Rvm_system_ruby["${ruby_version}"],
-		ruby_version => $ruby_version;
+  		require => Rvm_system_ruby["${ruby_version}"],
+  		ruby_version => $ruby_version;
     }
 
     exec { 'create container':
@@ -75,7 +76,7 @@ class nginx_passenger (
       group   => 'root',
       unless  => "/usr/bin/test -d ${installdir}",
       require => [ Package[$passenger_deps], Rvm_system_ruby[$ruby_version], Rvm_gem["${ruby_version}/passenger"]],
-	  environment => "HOME=/home/vagrant/",
+  	  environment => "HOME=/home/vagrant/",
     }
 
     file { 'nginx-config':
@@ -86,6 +87,19 @@ class nginx_passenger (
       content => template('nginx_passenger/nginx.conf.erb'),
       require => Exec['nginx-install'],
     }
+
+    file { 'proxy-config':
+      path    => "${installdir}/conf/proxy.conf",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template('nginx_passenger/proxy.conf.erb'),
+      require => Exec['nginx-install'],
+    }
+
+    file { $nx_run_dir:
+      ensure => directory,
+    } 
 
     exec { 'create sites-conf':
       path    => ['/usr/bin','/bin'],
@@ -100,8 +114,8 @@ class nginx_passenger (
       group     => 'root',
       mode      => '0755',
       content   => template('nginx_passenger/nginx.init.erb'),
-      require   => File['nginx-config'],
-      subscribe => File['nginx-config'],
+      require   => [File['nginx-config'], File['proxy-config']],
+      subscribe => [File['nginx-config'], File['proxy-config']],
     }
 
     file { $logdir:
@@ -116,7 +130,7 @@ class nginx_passenger (
       enable     => true,
       hasrestart => true,
       hasstatus  => true,
-      subscribe  => File['nginx-config'],
+      subscribe  => [File['nginx-config'], File['proxy-config']],
       require    => [ File[$logdir], File['nginx-service']],
     }
 

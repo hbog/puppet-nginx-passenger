@@ -26,10 +26,18 @@
 # }
 define nginx_passenger::vhost(
   $host = $name,
+  $server_name = $name,
   $port = '80',
   $root    = "/var/www/${host}",
   $makeroot = true,
   $rails = false,
+  $proxy = false,
+  $proxy_ssl = false,
+  $ssl = off,
+  $ssl_certificate = '',
+  $ssl_certificate_key = '',
+  $ssl_port = '443',
+  $ssl_default_server = false
 ){
   include nginx_passenger
 
@@ -65,6 +73,8 @@ define nginx_passenger::vhost(
   exec { "nginx ${host}":
     command => '/etc/init.d/nginx restart',
     require => File["${nginx_passenger::installdir}/conf/sites-enabled/${host}"],
+    refreshonly => true,
+    subscribe => File["${nginx_passenger::installdir}/conf/sites-enabled/${host}"],
   }
 }
 

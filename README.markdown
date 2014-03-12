@@ -53,7 +53,7 @@ class { 'nginx_passenger':
 
 ### Virtual Hosts
 
-You can easily configure a virtual hosts. An example is:
+You can easily configure a virtual host. An example is:
 
 ```puppet
 nginx::vhost { 'www.example.com':
@@ -62,6 +62,19 @@ nginx::vhost { 'www.example.com':
 }
 ```
 The _rails_ attribute is optional and set to false by default. However, if you want to deploy a rails app, use this attribute and the rails template will be used instead.
+
+### SSL
+
+You can enable SSL for a virtual host like so:
+
+```puppet
+nginx_passenger::vhost { 'www.example.com': 
+  ssl  => on,
+  ssl_certificate  => '/etc/ssl/example.crt',
+  ssl_certificate_key => '/etc/ssl/example.key',
+  ssl_default_server => true    # optional, to set this as default SSL server
+}
+```
 
 ### MIT License
 
