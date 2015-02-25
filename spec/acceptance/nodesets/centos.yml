@@ -2,9 +2,9 @@ HOSTS:
   centos-5.11-32-puppet:
     roles:
       - master
-    platform: centos-5.11-32-puppet
-    box: puppetlabs/centos-5.11-32-puppet
-    box_url: https://vagrantcloud.com/puppetlabs/boxes/centos-5.11-32-puppet
+    platform: el-6-x86_64
+    box: puppetlabs/centos-6.5-64-puppet
+    box_url: https://vagrantcloud.com/puppetlabs/boxes/centos-6.5-64-puppet
     hypervisor: vagrant
 
   
