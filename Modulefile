@@ -8,4 +8,4 @@ description 'Module for Nginx configuration'
 project_page 'https://github.com/kbatra/puppet-nginx-passenger'
 
 ## Add dependencies, if any:
-dependency 'maestrodev/rvm', '>= 1.1.8'
+dependency 'maestrodev/rvm', '>= 1.10.0'
