@@ -1,9 +1,6 @@
 fixtures:
   repositories:
     "rvm": "https://github.com/maestrodev/puppet-rvm"
-    "rvm": 
-      repo: "https://github.com/rwilcox/puppet-rvm"
-      branch: "add_exec_provider"
     "stdlib": "https://github.com/puppetlabs/puppetlabs-stdlib"
   symlinks:
     "nginx_passenger": "#{source_dir}"
