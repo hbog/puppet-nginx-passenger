@@ -80,7 +80,7 @@ nginx_passenger::vhost { 'www.example.com':
 
 Copyright (C) 2012 by Sergio Galván
 
-Copyright (C) 2013 by Karan Batra
+Copyright (C) 2013-2015 by Karan Batra
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
