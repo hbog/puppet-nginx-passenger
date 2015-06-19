@@ -56,7 +56,7 @@ class { 'nginx_passenger':
 You can easily configure a virtual host. An example is:
 
 ```puppet
-nginx::vhost { 'www.example.com':
+nginx_passenger::vhost { 'www.example.com':
 	port => '8080'
 	rails => true,
 }
