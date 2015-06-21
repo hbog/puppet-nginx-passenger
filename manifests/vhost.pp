@@ -28,7 +28,7 @@ define nginx_passenger::vhost(
   $host = $name,
   $server_name = $name,
   $port = '80',
-  $root    = "/var/www/${host}",
+  $root_arg = undef,
   $makeroot = true,
   $rails = false,
   $proxy = false,
@@ -40,6 +40,12 @@ define nginx_passenger::vhost(
   $ssl_default_server = false
 ){
   include nginx_passenger
+
+  if $root_arg == undef {
+    $root    = "/var/www/${host}"
+  } else {
+    $root    = $root_arg
+  }
 
   if $makeroot{
     file { $root:
@@ -71,10 +77,10 @@ define nginx_passenger::vhost(
   }
 
   exec { "nginx ${host}":
-    command => '/etc/init.d/nginx restart',
-    require => File["${nginx_passenger::installdir}/conf/sites-enabled/${host}"],
+    command     => '/etc/init.d/nginx restart',
+    require     => File["${nginx_passenger::installdir}/conf/sites-enabled/${host}"],
     refreshonly => true,
-    subscribe => File["${nginx_passenger::installdir}/conf/sites-enabled/${host}"],
+    subscribe   => File["${nginx_passenger::installdir}/conf/sites-enabled/${host}"],
   }
 }
 
