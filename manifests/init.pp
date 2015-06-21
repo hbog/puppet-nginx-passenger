@@ -43,7 +43,7 @@ class nginx_passenger (
       }
     }
     else {
-      $options = "${base_options} --auto-download"  
+      $options = "${base_options} --auto-download"
     }
 
     $passenger_deps = [ 'libcurl4-openssl-dev' ]
@@ -63,6 +63,12 @@ class nginx_passenger (
         ensure => $passenger_version,
   		require => Rvm_system_ruby["${ruby_version}"],
   		ruby_version => $ruby_version;
+    }
+
+    rvm_gem {
+      "${ruby_version}/bundler":
+        require => Rvm_system_ruby["${ruby_version}"],
+        ruby_version => $ruby_version;
     }
 
     exec { 'create container':
@@ -99,7 +105,7 @@ class nginx_passenger (
 
     file { $nx_run_dir:
       ensure => directory,
-    } 
+    }
 
     exec { 'create sites-conf':
       path    => ['/usr/bin','/bin'],
