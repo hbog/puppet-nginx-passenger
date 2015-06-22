@@ -71,6 +71,12 @@ class nginx_passenger (
         ruby_version => $ruby_version;
     }
 
+    rvm_gem {
+      "${ruby_version}/puppet":
+        require => Rvm_system_ruby["${ruby_version}"],
+        ruby_version => $ruby_version;
+    }
+
     exec { 'create container':
       command => "/bin/mkdir ${www} && /bin/chown www-data:www-data ${www} && /bin/chmod g+rws ${www}",
       unless  => "/usr/bin/test -d ${www}",
