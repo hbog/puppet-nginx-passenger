@@ -55,7 +55,7 @@ class nginx_passenger (
     rvm_system_ruby {
       $ruby_version:
         ensure      => 'present',
-        default_use => false;
+        default_use => true;
     }
 
     rvm_gem {
