@@ -52,7 +52,7 @@ define nginx_passenger::vhost(
       ensure  => directory,
       owner   => 'www-data',
       group   => 'www-data',
-      mode    => '0755',
+      mode    => '0775',
     }
   }
 
