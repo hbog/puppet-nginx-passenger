@@ -27,7 +27,9 @@ class nginx_passenger (
   $www    = '/var/www',
   $nginx_source_dir = '',
   $nginx_extra_configure_flags = '',
-  $app_environment = 'production') inherits nginx_passenger::params {
+  $app_environment = 'production',
+  $system_gems = []
+) inherits nginx_passenger::params {
 
     $base_options = "--auto --prefix=${installdir}"
 
@@ -67,6 +69,11 @@ class nginx_passenger (
 
     rvm_gem {
       "${ruby_version}/bundler":
+        require => Rvm_system_ruby["${ruby_version}"],
+        ruby_version => $ruby_version;
+    }
+
+    rvm_gem { $system_gems:
         require => Rvm_system_ruby["${ruby_version}"],
         ruby_version => $ruby_version;
     }
