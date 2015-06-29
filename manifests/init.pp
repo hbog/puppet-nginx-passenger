@@ -13,6 +13,10 @@
 #      Nginx's install directory.
 #   $www
 #      Base directory for
+#   $app_environment
+#     The environment which passenger should start under
+#   $system_gems
+#     Any additional system gems that should be installed alongside the ruby version e.g ['foreman']
 # Actions:
 #
 # Requires:
@@ -27,7 +31,9 @@ class nginx_passenger (
   $www    = '/var/www',
   $nginx_source_dir = '',
   $nginx_extra_configure_flags = '',
-  $app_environment = 'production') inherits nginx_passenger::params {
+  $app_environment = 'production',
+  $system_gems = []
+) inherits nginx_passenger::params {
 
     $base_options = "--auto --prefix=${installdir}"
 
@@ -43,7 +49,7 @@ class nginx_passenger (
       }
     }
     else {
-      $options = "${base_options} --auto-download"  
+      $options = "${base_options} --auto-download"
     }
 
     $passenger_deps = [ 'libcurl4-openssl-dev' ]
@@ -63,6 +69,17 @@ class nginx_passenger (
         ensure => $passenger_version,
   		require => Rvm_system_ruby["${ruby_version}"],
   		ruby_version => $ruby_version;
+    }
+
+    rvm_gem {
+      "${ruby_version}/bundler":
+        require => Rvm_system_ruby["${ruby_version}"],
+        ruby_version => $ruby_version;
+    }
+
+    rvm_gem { $system_gems:
+        require => Rvm_system_ruby["${ruby_version}"],
+        ruby_version => $ruby_version;
     }
 
     exec { 'create container':
@@ -99,7 +116,7 @@ class nginx_passenger (
 
     file { $nx_run_dir:
       ensure => directory,
-    } 
+    }
 
     exec { 'create sites-conf':
       path    => ['/usr/bin','/bin'],

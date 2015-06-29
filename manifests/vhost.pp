@@ -7,12 +7,14 @@
 #       The title of the resource  is used as the host.
 #   $port
 #       Virtual host port
-#   $root
+#   $root_arg
 #       Virtual host path
 #   $create_root
 #       True or false, allows to create the path for the virtual host
 #   $rails
 #       True or false, sets if the application is rails based or not.
+#   $environment
+#       The rails environment required for the application to startup under, defaults to production
 # Actions:
 #       Creates a virtual host
 #
@@ -37,7 +39,8 @@ define nginx_passenger::vhost(
   $ssl_certificate = '',
   $ssl_certificate_key = '',
   $ssl_port = '443',
-  $ssl_default_server = false
+  $ssl_default_server = false,
+  $environment = 'production',
 ){
   include nginx_passenger
 
@@ -52,7 +55,7 @@ define nginx_passenger::vhost(
       ensure  => directory,
       owner   => 'www-data',
       group   => 'www-data',
-      mode    => '0755',
+      mode    => '0775',
     }
   }
 
