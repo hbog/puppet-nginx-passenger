@@ -13,6 +13,10 @@
 #      Nginx's install directory.
 #   $www
 #      Base directory for
+#   $app_environment
+#     The environment which passenger should start under
+#   $system_gems
+#     Any additional system gems that should be installed alongside the ruby version e.g ['foreman']
 # Actions:
 #
 # Requires:
