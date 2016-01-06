@@ -32,6 +32,7 @@ class nginx_passenger (
   $nginx_source_dir = '',
   $nginx_extra_configure_flags = '',
   $app_environment = 'production',
+  $proxy_url = undef,
   $system_gems = []
 ) inherits nginx_passenger::params {
 
@@ -61,7 +62,8 @@ class nginx_passenger (
     rvm_system_ruby {
       $ruby_version:
         ensure      => 'present',
-        default_use => true;
+        default_use => true,
+        proxy_url => $proxy_url
     }
 
     rvm_gem {

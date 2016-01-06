@@ -6,6 +6,17 @@ describe "nginx_passenger" do
     it { should compile }
   end
 
+  context "proxy support for rvm_system_ruby" do
+      let (:params) {{
+          :ruby_version => 'ruby-2.0.0-p247',
+          :proxy_url => 'http://proxy.example.net:80'
+      }}
+      it do
+          should contain_rvm_system_ruby('ruby-2.0.0-p247').
+              with(proxy_url: 'http://proxy.example.net:80') 
+      end
+  end
+
   context "configuring nginx" do
     let :facts do
       {osfamily: 'Debian'}
